@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'y07l7ry=_=vlk!ya#^3t-!j6p95kmb@xnz3_y2ft%r%3!_zhvs'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -152,3 +153,4 @@ LOGIN_REDIRECT_URL = '/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STRIPE_TEST_KEY = "sk_test_51GyVWIGfas962MJjU4HwyP1JWsM4lQFrzfg7KHtX2hy19SIB5jW8yCsGY29QWJQvmJOXSDcteq2IXVZAAKn0U02W00O8Z4mULy"
+STRIPE_PUBLIC_KEY = "pk_test_51GyVWIGfas962MJjRUDJuSIFASMOL443kl3gEJB2KYwT4pFkbSbY2yUIuOpWENbPqZsUdXmRsvx0f37buE4zUGeh002W5n4GtW"

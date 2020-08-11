@@ -64,36 +64,37 @@
                         <!--Card image-->
                         <div class="view overlay">
                             <!-- <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top" alt=""> -->
-                            <img src="{{ item.image.url }}" class="card-img-top" >
-                            <a>
+                            <img src="{{ item.image.url }}" class="card-img-top">
+                            <a href="{{ item.get_absolute_url }}">
                                 <div class="mask rgba-white-slight"></div>
                             </a>
                         </div>
                         <!--Card image-->
 
                         <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="{{ item.get_absolute_url }}" class="grey-text">
+                        <a href="{{ item.get_absolute_url }}" class="grey-text">
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+
                                 <h5>{{ item.get_category_display }}</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                    <a href="" class="dark-grey-text">{{ item.title }}
+                        </a>
+                        <h5>
+                            <strong>
+                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
                       <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
                     </a>
                   </strong>
-                            </h5>
+                        </h5>
 
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>$
+                        <h4 class="font-weight-bold blue-text">
+                            <strong>$
                   {% if item.discount_price %}
                     {{ item.discount_price }}
                   {% else %}
                     {{ item.price }}
                   {% endif %}
                   </strong>
-                            </h4>
+                        </h4>
 
                         </div>
                         <!--Card content-->
