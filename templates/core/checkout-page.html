@@ -75,13 +75,13 @@
                             </div>
                         </div>
 
-                            {% if default_shipping_address %}
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="use_default_shipping" class="custom-control-input" id="use_default_shipping" />
-                                    <label class="custom-control-label form-check-label" for="use_default_shipping">Use default shipping address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
+                        {% if default_shipping_address %}
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="use_default_shipping" class="custom-control-input" id="use_default_shipping" />
+                            <label class="custom-control-label form-check-label" for="use_default_shipping">Use default shipping address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
 
-                                </div>
-                            {% endif %}
+                        </div>
+                        {% endif %}
                         <hr>
 
                         <h3>Billing Address</h3>
@@ -116,7 +116,7 @@
                                 <div class="col-lg-4 col-md-6 mb-4">
 
                                     <label for="billing_zip">Zip</label>
-                                    <input type="text" class="form-control" id="billing_zip" placeholder="Zip Code" name='billing_zip' >
+                                    <input type="text" class="form-control" id="billing_zip" placeholder="Zip Code" name='billing_zip'>
                                     <div class="invalid-feedback">
                                         Zip code required.
                                     </div>
@@ -139,15 +139,15 @@
                                 <label class="custom-control-label form-check-label" for="set_default_billing">Save as default billing address</label>
 
 
-                            </div>    
+                            </div>
                         </div>
                         {% if default_billing_address %}
-                                <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="use_default_billing" class="custom-control-input" id="use_default_billing" />
-                                <label class="custom-control-label form-check-label" for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }} </label>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="use_default_billing" class="custom-control-input" id="use_default_billing" />
+                            <label class="custom-control-label form-check-label" for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }} </label>
 
-                            </div>
-                            {% endif %}
+                        </div>
+                        {% endif %}
                         <hr>
 
                         <h3> Payment Option </h3>
@@ -160,11 +160,7 @@
                                 <label class="custom-control-label" for="{{ name }}">{{ name }}</label> {% comment %} {{ form.payment_option}} {% endcomment %}
 
                             </div>
-                            {% endfor %} {% comment %}
-                            <div class="custom-control custom-radio">
-                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                <label class="custom-control-label" for="paypal">Paypal</label>
-                            </div> {% endcomment %}
+                            {% endfor %}
                         </div>
                         <hr class="mb-4">
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
@@ -191,34 +187,29 @@
     </div>
 </main>
 <!--Main layout-->
-{% endblock content %}
-
-{% block extra_script %}
-<script> 
-var hideable_billing_form = $('.hideable_billing_form');
-var hideable_shipping_form = $('.hideable_shipping_form');
+{% endblock content %} {% block extra_script %}
+<script>
+    var hideable_billing_form = $('.hideable_billing_form');
+    var hideable_shipping_form = $('.hideable_shipping_form');
 
 
-var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
-var use_default_billing = document.querySelector("input[name=use_default_billing]");
+    var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+    var use_default_billing = document.querySelector("input[name=use_default_billing]");
 
-use_default_shipping.addEventListener('change', function(){
-    if (this.checked) {
-        hideable_shipping_form.hide();
-    }
-    else{
-        hideable_shipping_form.show();
-    }
-});
+    use_default_shipping.addEventListener('change', function() {
+        if (this.checked) {
+            hideable_shipping_form.hide();
+        } else {
+            hideable_shipping_form.show();
+        }
+    });
 
-use_default_billing.addEventListener('change', function(){
-    if (this.checked) {
-        hideable_billing_form.hide();
-    }
-    else{
-        hideable_billing_form.show();
-    }
-});
- 
+    use_default_billing.addEventListener('change', function() {
+        if (this.checked) {
+            hideable_billing_form.hide();
+        } else {
+            hideable_billing_form.show();
+        }
+    });
 </script>
 {% endblock extra_script %}

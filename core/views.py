@@ -1,6 +1,7 @@
 import stripe
 import random
 import string
+import braintree
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -268,8 +269,8 @@ class CheckoutView(View):
                 payment_option = form.cleaned_data.get('payment_option')
                 if payment_option == 'S':
                     return redirect('core:payment', payment_option='stripe')
-                elif payment_option == 'PP':
-                    return redirect('core:payment', payment_option='paypal')
+                elif payment_option == 'OP':
+                    return redirect('core:otherpayment')
                 else:
                     messages.warning(
                         self.request, "Invalid Payment option selected")
@@ -407,6 +408,56 @@ class PaymentView(View):
                 # self.request, "A serious error occured, we have been notified")
                 return redirect("/")
 
+class OtherPayments(View):
+    def get(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        # generate token
+        client_token = braintree.ClientToken.generate()
+        return render(self.request, 'core/process.html', {
+            'order': order,
+            'client_token': client_token
+        })
+
+
+    def post(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        # retrieve nonce
+        nonce = self.request.POST.get('payment_method_nonce', None)
+        # create and submit transaction
+        result = braintree.Transaction.sale({
+            'amount': '{:.2f}'.format((int(order.get_total() * 100))),
+            'payment_method_nonce': nonce,
+            'options': {
+                'submit_for_settlement': True
+            }
+        })
+
+        if result.is_success:
+            # mark the order as paid
+            # create payment
+            payment = Payment()
+            payment.braintreeID = result.transaction.id
+            payment.user = self.request.user
+            payment.amount = order.get_total()
+            payment.save()
+
+            # assign payment to the order
+            order_items = order.items.all()
+            order_items.update(ordered=True)
+            for item in order_items:
+                item.save()
+                order.ordered = True
+                order.payment = payment
+                order.ref_code = create_ref_code()
+                order.save()
+                messages.success(self.request, "Your request was successful")
+                return redirect("core:home")
+
+        else:
+            messages.warning(self.request, "Transaction not successful")
+            return redirect("core:home")
+        
+    
 
 @login_required
 def remove_single_item_from_cart(request, slug):

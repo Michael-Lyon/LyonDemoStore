@@ -23,7 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('core.urls', namespace='core')),
-    path("paystack", include(('paystack.urls', 'paystack'), namespace='paystack')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from braintree import Configuration, Environment
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -154,3 +155,20 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STRIPE_TEST_KEY = "sk_test_51GyVWIGfas962MJjU4HwyP1JWsM4lQFrzfg7KHtX2hy19SIB5jW8yCsGY29QWJQvmJOXSDcteq2IXVZAAKn0U02W00O8Z4mULy"
 STRIPE_PUBLIC_KEY = "pk_test_51GyVWIGfas962MJjRUDJuSIFASMOL443kl3gEJB2KYwT4pFkbSbY2yUIuOpWENbPqZsUdXmRsvx0f37buE4zUGeh002W5n4GtW"
+
+
+# Braintree settings
+BRAINTREE_MERCHANT_ID = 'jc6yx39ztpsqxr4g'
+BRAINTREE_PUBLIC_KEY = '97syjpmwn3mkwrnw'
+BRAINTREE_PRIVATE_KEY = '06c767972e1ad778fdaeb8bcbf696c0f'
+Configuration.configure(
+    Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
+
+
+# EMAILS
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
